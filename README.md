@@ -1,2 +1,4 @@
 # Analyse d’Image et statistiques pour finaliser l'Étude des M&M's
-Répertorier les M&amp;M's par couleur
+Dans le fichier `code_détection` on a établit un programme permettant de répertorier les M&amp;M's par couleur
+
+
