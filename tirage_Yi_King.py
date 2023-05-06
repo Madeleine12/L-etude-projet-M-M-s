@@ -1,3 +1,6 @@
+# Cette fonction renvoit et affiche l'hexagramme du Yi King correspondant à un paquet donné, dont il faut donner le contenu dans le terminal lorsque demandé.
+
+
 def schema_yi_jing():
 
     yin = "--   --"
