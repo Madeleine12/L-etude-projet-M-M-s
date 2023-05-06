@@ -2,13 +2,8 @@ from os import listdir, mkdir
 import cv2
 import numpy as np
 
-# from sklearn.metrics import confusion_matrix
-
-# A CHANGER PEUT ETRE :
-# nom_du_dossier_ou_vous_avez_vos_photos (il faut que ce dossier soit au meme endroit que le code)
+# nom du dossier contenant les images
 dossier = "toutes_images"
-
-# mkdir('nouvelles_images')
 
 nb_bleu = []
 nb_jaune = []
@@ -47,17 +42,12 @@ for nom_image in images:
     im = cv2.imread(nom)
 
     convertie = cv2.cvtColor(im, cv2.COLOR_BGR2HSV)
-    # cv2.imwrite('nouvelles_images/hsv'+i, convertie)
     # FILTRES
     bleu = filtre(im, [120, 70, 0], [255, 95, 20])
     jaune = filtre(im, [0, 160, 190], [50, 210, 240])
     marron = filtre(convertie, [0, 90, 80], [10, 170, 100])
-    # cv2.imwrite("nouvelles_images/filtre_marron" + nom, marron)
     orange = filtre(im, [35, 115, 220], [50, 140, 255])
-    # rouge = filtre(im, [50, 50, 140], [70, 80, 255])
-    # rouge = filtre(im, [20, 40, 130], [60, 70, 210])
     rouge = filtre(im, [50, 50, 140], [60, 70, 210])
-    # cv2.imwrite("nouvelles_images/filtre_rouge" + nom, rouge)
     vert = filtre(im, [10, 90, 30], [90, 255, 80])
 
     # HOMOGENEITE
@@ -68,20 +58,6 @@ for nom_image in images:
     rouge = homogeneite(rouge)
     vert = homogeneite(vert)
 
-    # METS LES NOUVELLES IMAGES DANS UN NOUVEAU DOSSIER POUR POUVOIR AJUSTER HOMOGENEITE
-    # nom = "nouvelles_images/bleu" + i + ".png"
-    # cv2.imwrite(nom, bleu)
-    # nom = "nouvelles_images/jaune" + i + ".png"
-    # cv2.imwrite(nom, jaune)
-    # nom = "nouvelles_images/marron" + i + ".png"
-    # cv2.imwrite(nom, marron)
-    # nom = "nouvelles_images/orange" + i + ".png"
-    # cv2.imwrite(nom, orange)
-    # nom = "nouvelles_images/rouge" + i + ".png"
-    # cv2.imwrite(nom, rouge)
-    # nom = "nouvelles_images/vert" + i +".png"
-    # cv2.imwrite(nom, vert)
-
     # CONNECT COMPONENT
     nb_bleu += [connect_component(bleu)]
     nb_jaune += [connect_component(jaune)]
@@ -91,7 +67,7 @@ for nom_image in images:
     nb_vert += [connect_component(vert)]
 
 
-# CALCUL DE PROPORTIONS ET TOUT ET TOUT
+# CALCUL DE PROPORTIONS
 tot_bleu = 0
 tot_jaune = 0
 tot_marron = 0
@@ -112,7 +88,6 @@ for nom_image in nb_vert:
     tot_vert += nom_image
 
 TOT = tot_bleu + tot_jaune + tot_marron + tot_orange + tot_rouge + tot_vert
-# print(TOT)
 p_bleu = tot_bleu / TOT
 p_jaune = tot_jaune / TOT
 p_marron = tot_marron / TOT
@@ -120,12 +95,12 @@ p_orange = tot_orange / TOT
 p_rouge = tot_rouge / TOT
 p_vert = tot_vert / TOT
 
-# print("proportion de bleus", p_bleu)
-# print("proportion de jaunes", p_jaune)
-# print("proportion de marrons", p_marron)
-# print("proportion de oranges", p_orange)
-# print("proportion de rouges", p_rouge)
-# print("proportion de verts", p_vert)
+print("proportion de bleus", p_bleu)
+print("proportion de jaunes", p_jaune)
+print("proportion de marrons", p_marron)
+print("proportion de oranges", p_orange)
+print("proportion de rouges", p_rouge)
+print("proportion de verts", p_vert)
 
 print("bleu", tot_bleu)
 print("jaune", tot_jaune)
